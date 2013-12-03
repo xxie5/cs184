@@ -12,6 +12,20 @@ GUI::~GUI(void)
 {
 }
 
+void drawHead()
+{
+	glutSolidSphere(0.5,16,16);
+}
+void drawBody()
+{
+	glBegin(GL_LINES);
+	glVertex3f(0,1,0);
+	glVertex3f(0,0,0);
+	glEnd();
+}
+
+
+
 void renderScene()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //clear buffers
@@ -36,6 +50,19 @@ void renderScene()
 	glVertex3f(5,-5,0);
 	glEnd();
 
+	glPushMatrix();
+	glTranslatef(0,0,0);
+	glRotatef(0,0,0,0);
+
+	glPushMatrix();
+	glTranslatef(0,1,0);
+	drawHead();
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslatef(0,0,0);
+	drawBody();
+	glPopMatrix();
 
 	glFlush();
 	glutSwapBuffers();
@@ -48,7 +75,7 @@ void reshapeScene(int width, int height)
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(90, aspectRatio, 3.0, 7.0);
+	gluPerspective(90, aspectRatio, 1.0, 10.0);
 	//defines the perspective by setting field of view, aspect ratio, near and far clipping plane 
 
 	glViewport(0, 0, width, height);
@@ -62,7 +89,7 @@ int main(int argc, char* argv[])
 	//OpenGL stuff
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
-	glutInitWindowSize(800,400);
+	glutInitWindowSize(400,400);
 	glutInitWindowPosition(0, 0);
 	glutCreateWindow("Final project");
 	glutDisplayFunc(renderScene);
